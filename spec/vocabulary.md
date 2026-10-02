@@ -19,7 +19,7 @@ The terms the spec, the flow pages and the ADRs use, each with the section of `a
 | **unit** | an app, a service, a CLI, or a single library and its closure (private helper crates folded in); in V1 the main `[[bin]]` or the lib, other bins and examples "not analyzed" | §3, §13.7, [ADR 0007](../adr/0007-unit-in-v1.md) |
 | **area** | a component of a unit, derived from the module tree, drawn in a column by side; overrides only in `.arch/areas.toml`; no annotation in source | §5, §7, §13.4, [ADR 0004](../adr/0004-areas-derived-no-source-annotation.md) |
 | **item** | a piece of code (function, type, trait, module, …) with kind, file, line, visibility and re-export; carries a scope id | §3, §7 |
-| **link** | a "uses" relation between items, resolved or unresolved with the reason; drawn left → right; a right-to-left link is drawn as a smell | §5, §7 |
+| **link** | a "uses" relation between items, resolved or unresolved with the reason; drawn with the grain of the column rule; a call-family link against the grain is drawn as a smell ([ADR 0025](../adr/0025-direction-call-family-grain.md)) | §5, §7, `map-invariants.md` |
 | **finding** | a rule or lint violation on a link or an item, with a witness and an `origin` (always `core` in V1); blocking or not; a finding on a guessed link warns, never blocks | §6 (Daily), §7, §13.9, [ADR 0009](../adr/0009-confidence-levels.md) |
 | **witness** | the source of a shown fact: `file:line`, a contract, a tool output; the host re-reads every locator | §1 (witness rule) |
 | **rule** | a dependency rule in `.arch/rules`: subject · must not · targets · level | §7, §13.6 |

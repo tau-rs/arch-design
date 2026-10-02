@@ -33,5 +33,5 @@ Onboarding funnel and firsts; the plugin system entirely (host, registry, lockfi
 
 | repo | state |
 |---|---|
-| `arch-design` | seeded 2026-10-02; ADRs 0001–0024 |
+| `arch-design` | seeded 2026-10-02; ADRs 0001–0026 (2026-10-03) |
 | `arch` · `arch-app` · `sett` · `arch-fixtures` | see each repo's README for the ADR it is synced to |
