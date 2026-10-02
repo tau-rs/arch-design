@@ -1,28 +1,32 @@
 # handoff · `tau-rs/arch-fixtures` · test data and invariants
 
+> Amended 2026-10-03 from FINDINGS F-4, F-8, F-10 (tau-rs/arch-design#9, #12, #14): zed lib roots by cargo `lib.path`; six UI states; smallsvc in-tree.
+
 Purpose: the shared ground truth for `arch`, `arch-app` and `sett`. Real repositories pinned by commit, the facts arch must extract from them (golden files), the views it must compute, and the invariant and performance checks. Separate repo because it is large, slow-moving, and consumed by three others.
 
 ## Layout
 
 ```
 arch-fixtures/
-  repos/                   git submodules pinned by commit:
+  repos/                   three git submodules pinned by commit, and smallsvc in-tree:
     ripgrep/               simple CLI · hexagon · ~1k items
     zero2prod/             web app · hexagon · routes, sqlx, a shared table used as a queue
-    smallsvc/              our own ~130-item service (orderly), written for the flows (ship/pay/notify)
-    zed/                   large workspace · 250 crates · V2 units (only lib.rs of gpui, editor, project are
-                           asserted in V1; the rest exists for perf runs)
+    smallsvc/              our own small service (orderly), in-tree, not a submodule, written for the flows
+                           (ship/pay/notify); its item count is read from golden/smallsvc/sizes.json
+    zed/                   large workspace · 253 crates · V2 units (only the lib roots of gpui, editor, project are
+                           asserted in V1, by cargo lib.path: crates/gpui/src/gpui.rs, crates/editor/src/editor.rs,
+                           crates/project/src/project.rs; the rest exists for perf runs)
   golden/<repo>/
     facts.json             items, links (kind, confidence, witness), entries, ports, externals, tables, commits
     areas.toml             the derived areas and the overrides used
     views/                 positions.json · fold.json · findings.json · checklist.json · whatsnew.json
     sizes.json             measured counts (items, links, crates) replacing the approximations in the design pages
   checks/
-    invariants.md          MAP-1…32, CANVAS-1…2 as testable statements
+    invariants.md          MAP-1…32, CANVAS-1…2 as testable statements (source: arch-design spec/map-invariants.md)
     invariants.rs          the checks (positions stable across a no-op save; no state re-layouts; fold floor;
                            overlay stacking; unresolved folded to one pill; cross-unit links on public surfaces;
                            direction left → right in both rules; confidence rule for findings)
-    budgets.toml           first index · one-file recompute · fold/expand · first paint · pan/zoom fps · memory
+    budgets.toml           first index · one-file recompute · fold/expand · first paint · pan/zoom fps · memory (ADR 0026)
   scenarios/
     v1-done.md             the end-to-end scenario on smallsvc and zero2prod (init · check · session · gate ·
                            judge · PR · review · merge · archive) with expected rows
@@ -43,7 +47,7 @@ arch-fixtures/
 2. Golden facts for ripgrep, zero2prod, smallsvc (full) and zed (three `lib.rs`), with `sizes.json`.
 3. `invariants.rs` runnable against a facts/views pair; `budgets.toml`.
 4. `scenarios/v1-done.md`.
-5. `fixtures-for-ui/` for the five states listed.
+5. `fixtures-for-ui/` for the six states listed.
 
 ## Sync with the other repos
 

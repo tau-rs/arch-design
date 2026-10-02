@@ -21,6 +21,7 @@ arch-design/
     arch-v1-spec.md            the V1 specification; §13 holds the decisions of 2 Oct 2026
     vocabulary.md              the terms, with the C4 mapping
     keyboard.md                the keyboard map
+    map-invariants.md          MAP-1…32 and CANVAS-1…2 as testable statements, each with its owner and check
   flows/                       the HTML pages, one file each, self-contained (open in a browser)
     shell.html                 the shell: one bar, rail, left panel, bottom panel, status bar
     plan-shell.html            plan and delegate, on the shell
@@ -37,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0024** (2026-10-02). Later decisions are added as 0025, 0026, …
+Synced-to line for the other repos: **ADR 0026** (2026-10-03). Later decisions are added as 0027, 0028, …
 
 | # | decision |
 |---|---|
@@ -65,6 +66,8 @@ Synced-to line for the other repos: **ADR 0024** (2026-10-02). Later decisions a
 | [0022](adr/0022-review-without-plan.md) | Review without a plan: works for any branch |
 | [0023](adr/0023-settings-errors-secrets-packaging-telemetry.md) | Settings, errors, secrets, packaging, telemetry |
 | [0024](adr/0024-repositories.md) | Repositories: arch · arch-app · sett · arch-fixtures · arch-design |
+| [0025](adr/0025-direction-call-family-grain.md) | Direction: only call-family links carry it, with the grain of the column rule (left → right in layers, inward in hexagon) |
+| [0026](adr/0026-budgets-first-index-memory.md) | Budgets: first index < 5 s cold at 1,200 items; `arch` < 500 MB RSS at 5,000 visible items; one benchmark per budget |
 ## Flow pages
 
 | page | what it is |
