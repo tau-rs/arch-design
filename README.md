@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0028** (2026-10-03). Later decisions are added as 0029, 0030, …
+Synced-to line for the other repos: **ADR 0029** (2026-10-03). Later decisions are added as 0030, 0031, …
 
 | # | decision |
 |---|---|
@@ -70,6 +70,7 @@ Synced-to line for the other repos: **ADR 0028** (2026-10-03). Later decisions a
 | [0026](adr/0026-budgets-first-index-memory.md) | Budgets: first index < 5 s cold at 1,200 items; `arch` < 500 MB RSS at 5,000 visible items; one benchmark per budget |
 | [0027](adr/0027-arch-init-sides-rule.md) | `arch init` sides: entry → driving, I/O external → driven, otherwise domain; split one level on a driving/driven mix; override in `areas.toml` |
 | [0028](adr/0028-entry-kinds-spawned-worker.md) | Entry kinds: a function spawned once at start-up that loops for the life of the process is an entry (`spawned worker`); `resolved` when spawned in `main`, `guessed` otherwise |
+| [0029](adr/0029-arch-init-order-rule.md) | `arch init` order: alphabetical by area name within a side (bytes, ascending); one area per top-level module, a single file included; grouping is a hand override; after `init` the file is the order |
 ## Flow pages
 
 | page | what it is |
