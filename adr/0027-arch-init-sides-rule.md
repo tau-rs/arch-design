@@ -3,6 +3,7 @@
 - Date: 2026-10-03
 - Status: accepted
 - Source: arch-fixtures FINDINGS.md F-6 (tau-rs/arch-design#6); amends [ADR 0006](0006-arch-init.md) "computed sides" and spec §13.6
+- Settled since: tau-rs/arch-design#7 is decided by [ADR 0028](0028-entry-kinds-spawned-worker.md): the worker spawned at start-up is an entry, so `issue_delivery_worker` and smallsvc `src/worker.rs` are **driving**; the "if #7" rows below read that way
 
 ## In plain words
 
