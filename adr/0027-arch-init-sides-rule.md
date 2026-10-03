@@ -4,6 +4,7 @@
 - Status: accepted
 - Source: arch-fixtures FINDINGS.md F-6 (tau-rs/arch-design#6); amends [ADR 0006](0006-arch-init.md) "computed sides" and spec §13.6
 - Settled since: tau-rs/arch-design#7 is decided by [ADR 0028](0028-entry-kinds-spawned-worker.md): the worker spawned at start-up is an entry, so `issue_delivery_worker` and smallsvc `src/worker.rs` are **driving**; the "if #7" rows below read that way
+- Settled since: tau-rs/arch-design#28 is decided (2026-10-03): logging through a facade (`tracing`, `log`) is a library call, not an I/O external; decision 3 says so and smallsvc `email` is driven through http alone
 
 ## In plain words
 
@@ -30,7 +31,7 @@ Sides exist only in a hexagon unit (MAP-26). In a layers unit `arch init` writes
 3. **Definitions.**
    - *Non-test code only*: the rule reads facts from non-test code. Items under `#[cfg(test)]` and test targets are ignored. Why: an inline `mod tests` with a fake repository, or a `mockall` mock generated next to the trait, would otherwise pull `app` or `ports` into driven; a domain test that opens a database would do the same.
    - *Holds an entry*: the module defines a function the fact model lists as an entry, or the handler end of a `route → handler` link. A middleware is not an entry. This ADR does not define entry kinds; it reads whatever the fact model lists (spec §9, and tau-rs/arch-design#7 when decided).
-   - *I/O external*: an external whose port kind is rpc · http · cli · topic · sql · redis · fs · tty. Kinds `crate` and `pub` do not count. Why: every module uses some library; counting libraries would make everything driven.
+   - *I/O external*: an external whose port kind is rpc · http · cli · topic · sql · redis · fs · tty. Kinds `crate` and `pub` do not count. Why: every module uses some library; counting libraries would make everything driven. Logging through a facade (`tracing`, `log`) is a library call: the analyzer reports it as kind `crate`, and `tty` is only code that writes to the terminal itself (`println!`, `std::io::stdout`, a TUI). Why: almost every module logs, and a log line is routed by the composition root like any other port; counting it would make every module that logs driven.
    - *Implements a trait … also implements*: the trait is declared in the unit (not `std`, not a dependency). Why: an in-memory repository is a stand-in for the real one and must sit in the same column; "same port, same side" is the cheapest fact that says so.
 4. **Split, one level, only on a driving/driven mix.** If applying the rule to a top-level module's direct children gives at least one driving child **and** at least one driven child, the module is not one area: each direct child becomes an area with its own side from the rule. The area takes the child's bare name (`http`, `postgres`); when two areas would share a name it is prefixed with its parent (`orders::handlers`, `users::handlers`). Otherwise the module is one area and takes its side from the rule applied to the whole module. The split never goes deeper than one level. Why only on that mix: a module whose children are "driven and domain" (zero2prod's `authentication`: `password` runs SQL, `middleware` does not) is one thing to its author and stays one area.
 5. **Override.** `arch init` writes the computed side of every area into `areas.toml`; a person who disagrees edits the file ([ADR 0004](0004-areas-derived-no-source-annotation.md)). Nothing is asked ([ADR 0006](0006-arch-init.md)).
@@ -65,7 +66,7 @@ The rest of zero2prod, for fixtures to confirm against the golden facts when it 
 | `http` (`adapters::http`) | `adapters` split; holds the route handlers | driving | driving |
 | `postgres` | split; sql | driven | driven |
 | `memory` | split; implements `OrderRepository` and `Outbox`, which `postgres` implements | driven | driven |
-| `stripe` · `carrier` · `email` | split; http (email also tty) | driven | driven |
+| `stripe` · `carrier` · `email` | split; http | driven | driven |
 | `app` (`src/app/**`) | no entry, no I/O external (`app::notify` naming `LogNotifier` is a dependency, already in `.arch/allows`) | domain | domain |
 | `domain` · `ports` | neither | domain | domain |
 | `src/config.rs` | reads the environment; not an external port kind | domain | domain (listed under `app`) |
