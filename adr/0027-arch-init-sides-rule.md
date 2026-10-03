@@ -34,7 +34,7 @@ Sides exist only in a hexagon unit (MAP-26). In a layers unit `arch init` writes
    - *Implements a trait … also implements*: the trait is declared in the unit (not `std`, not a dependency). Why: an in-memory repository is a stand-in for the real one and must sit in the same column; "same port, same side" is the cheapest fact that says so.
 4. **Split, one level, only on a driving/driven mix.** If applying the rule to a top-level module's direct children gives at least one driving child **and** at least one driven child, the module is not one area: each direct child becomes an area with its own side from the rule. The area takes the child's bare name (`http`, `postgres`); when two areas would share a name it is prefixed with its parent (`orders::handlers`, `users::handlers`). Otherwise the module is one area and takes its side from the rule applied to the whole module. The split never goes deeper than one level. Why only on that mix: a module whose children are "driven and domain" (zero2prod's `authentication`: `password` runs SQL, `middleware` does not) is one thing to its author and stays one area.
 5. **Override.** `arch init` writes the computed side of every area into `areas.toml`; a person who disagrees edits the file ([ADR 0004](0004-areas-derived-no-source-annotation.md)). Nothing is asked ([ADR 0006](0006-arch-init.md)).
-6. **Not decided here: order.** ADR 0006 also says "computed order"; that rule is still unstated (filed separately, see consequences).
+6. **Not decided here: order.** ADR 0006 also says "computed order"; that rule is still unstated (filed separately, see consequences). Since stated by [ADR 0029](0029-arch-init-order-rule.md).
 
 ```mermaid
 flowchart TD
