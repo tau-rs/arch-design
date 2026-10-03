@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0029** (2026-10-03). Later decisions are added as 0030, 0031, …
+Synced-to line for the other repos: **ADR 0030** (2026-10-03). Later decisions are added as 0031, 0032, …
 
 | # | decision |
 |---|---|
@@ -71,6 +71,7 @@ Synced-to line for the other repos: **ADR 0029** (2026-10-03). Later decisions a
 | [0027](adr/0027-arch-init-sides-rule.md) | `arch init` sides: entry → driving, I/O external → driven, otherwise domain; split one level on a driving/driven mix; override in `areas.toml` |
 | [0028](adr/0028-entry-kinds-spawned-worker.md) | Entry kinds: a function spawned once at start-up that loops for the life of the process is an entry (`spawned worker`); `resolved` when spawned in `main`, `guessed` otherwise |
 | [0029](adr/0029-arch-init-order-rule.md) | `arch init` order: alphabetical by area name within a side (bytes, ascending); one area per top-level module, a single file included; grouping is a hand override; after `init` the file is the order |
+| [0030](adr/0030-analysis-inputs-outside-the-tree.md) | Inputs outside the tree: target triple, toolchain and build-script output are in the package id; the target is this machine's unless `areas.toml` pins it; features are the unit's defaults |
 ## Flow pages
 
 | page | what it is |
