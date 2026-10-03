@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0026** (2026-10-03). Later decisions are added as 0027, 0028, …
+Synced-to line for the other repos: **ADR 0027** (2026-10-03). Later decisions are added as 0028, 0029, …
 
 | # | decision |
 |---|---|
@@ -68,6 +68,7 @@ Synced-to line for the other repos: **ADR 0026** (2026-10-03). Later decisions a
 | [0024](adr/0024-repositories.md) | Repositories: arch · arch-app · sett · arch-fixtures · arch-design |
 | [0025](adr/0025-direction-call-family-grain.md) | Direction: only call-family links carry it, with the grain of the column rule (left → right in layers, inward in hexagon) |
 | [0026](adr/0026-budgets-first-index-memory.md) | Budgets: first index < 5 s cold at 1,200 items; `arch` < 500 MB RSS at 5,000 visible items; one benchmark per budget |
+| [0027](adr/0027-arch-init-sides-rule.md) | `arch init` sides: entry → driving, I/O external → driven, otherwise domain; split one level on a driving/driven mix; override in `areas.toml` |
 ## Flow pages
 
 | page | what it is |
