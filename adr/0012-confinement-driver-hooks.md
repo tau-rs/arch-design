@@ -4,6 +4,7 @@
 - Status: accepted
 - Source: `spec/arch-v1-spec.md` §13.12 (decisions of 2 Oct 2026, taken in the product chat)
 - Settled since: tau-rs/arch-design#15 is decided (2026-10-03): hooks passed with `--settings` never fire under `--bare`, so the claude-code driver does not use `--bare`; it keeps the user's settings out with `--setting-sources '' --strict-mcp-config` instead, and the decision gives the command line
+- Settled since: tau-rs/arch-design#33 is decided (2026-10-03): the driver drops `--no-session-persistence` and starts each session with an arch-generated `--session-id <uuid>`; answers, fix rounds and restart continue it with `--resume <uuid>`
 
 ## Context
 
@@ -26,13 +27,15 @@ Every agent write must pass through the tool layer with the content hash of the 
 
   ```
   claude -p --output-format stream-json --verbose --include-hook-events
-         --setting-sources '' --strict-mcp-config --no-session-persistence
+         --setting-sources '' --strict-mcp-config --session-id <uuid>
          --settings <arch hooks + permissions> --mcp-config <arch MCP server>
          --append-system-prompt-file <context pack> --allowedTools …
          --permission-mode acceptEdits --permission-prompts none
   ```
 
-  Why: `--setting-sources ''` plus `--strict-mcp-config` keeps the user's own settings, hooks and MCP servers out, which is what `--bare` was chosen for, while the hooks arch passes with `--settings` still fire and the user's normal login works. One honest consequence: this combination does not switch off CLAUDE.md auto-discovery, LSP, plugin sync or auto-memory; each gets its own switch if a later finding shows it matters. Rejected: keeping `--bare` and sending the hooks over the SDK control protocol (API key only, an untested path, more adapter code). `--no-session-persistence` is open on tau-rs/arch-design#33: it rules out `--resume`, which Asks, fix rounds, the [ADR 0015](0015-restart.md) restart and the [ADR 0003](0003-threads-and-records.md) transcript pointer depend on.
+  Why: `--setting-sources ''` plus `--strict-mcp-config` keeps the user's own settings, hooks and MCP servers out, which is what `--bare` was chosen for, while the hooks arch passes with `--settings` still fire and the user's normal login works. One honest consequence: this combination does not switch off CLAUDE.md auto-discovery, LSP, plugin sync or auto-memory; each gets its own switch if a later finding shows it matters. Rejected: keeping `--bare` and sending the hooks over the SDK control protocol (API key only, an untested path, more adapter code).
+
+  arch generates the `<uuid>` and records it, with the transcript path, as the [ADR 0003](0003-threads-and-records.md) pointers. A later turn of the same session (the answer to an Ask, a fix round, the [ADR 0015](0015-restart.md) restart) runs the same command with `--resume <uuid>` in place of `--session-id <uuid>`; Claude Code keeps the session id on resume. Why (tau-rs/arch-design#33): each of these picks the session up again, and `--no-session-persistence` means a session is never saved and cannot be resumed. One honest consequence: arch's runs are stored in Claude Code's own history under each worktree's path (`~/.claude/projects/<worktree>/`), so they appear in that directory's `claude --resume` list. Rejected: keeping `--no-session-persistence` and running every turn cold, re-fed from `thread.jsonl` (the agent loses its working reasoning on answers and fix rounds, ADR 0015 would mean restarting the element, and the transcript pointer would always be empty).
 
 ## Consequences
 
