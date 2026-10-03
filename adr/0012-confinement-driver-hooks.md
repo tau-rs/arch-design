@@ -3,6 +3,7 @@
 - Date: 2026-10-02
 - Status: accepted
 - Source: `spec/arch-v1-spec.md` §13.12 (decisions of 2 Oct 2026, taken in the product chat)
+- Settled since: tau-rs/arch-design#15 is decided (2026-10-03): hooks passed with `--settings` never fire under `--bare`, so the claude-code driver does not use `--bare`; it keeps the user's settings out with `--setting-sources '' --strict-mcp-config` instead, and the decision gives the command line
 
 ## Context
 
@@ -13,11 +14,29 @@ Every agent write must pass through the tool layer with the content hash of the 
 - The driver's **pre-edit hook** calls arch: the stale-write guard, then the element-scope veto.
 - The driver's **post-edit hook** attributes the write.
 - This is the **only confinement in V1**.
-- Verify on day one that `--settings` hooks fire under `--bare`.
+- **The claude-code driver does not run under `--bare`.** The day-one check was run (tau-rs/arch#12, `experiments/hooks-under-bare.sh`, Claude Code 2.1.272):
+
+  | run | pre/post-edit hooks fire | an exit-2 hook blocks the tool |
+  |---|---|---|
+  | `--settings` hooks, no other flag | yes | yes |
+  | `--bare` + `--settings` hooks | never | — |
+  | `--setting-sources ''` + `--strict-mcp-config` + `--settings` hooks | yes | yes |
+
+  `--bare` also accepts only an API key, never the user's claude.ai login. The adapter invokes, in the worktree:
+
+  ```
+  claude -p --output-format stream-json --verbose --include-hook-events
+         --setting-sources '' --strict-mcp-config --no-session-persistence
+         --settings <arch hooks + permissions> --mcp-config <arch MCP server>
+         --append-system-prompt-file <context pack> --allowedTools …
+         --permission-mode acceptEdits --permission-prompts none
+  ```
+
+  Why: `--setting-sources ''` plus `--strict-mcp-config` keeps the user's own settings, hooks and MCP servers out, which is what `--bare` was chosen for, while the hooks arch passes with `--settings` still fire and the user's normal login works. One honest consequence: this combination does not switch off CLAUDE.md auto-discovery, LSP, plugin sync or auto-memory; each gets its own switch if a later finding shows it matters. Rejected: keeping `--bare` and sending the hooks over the SDK control protocol (API key only, an untested path, more adapter code). `--no-session-persistence` is open on tau-rs/arch-design#33: it rules out `--resume`, which Asks, fix rounds, the [ADR 0015](0015-restart.md) restart and the [ADR 0003](0003-threads-and-records.md) transcript pointer depend on.
 
 ## Consequences
 
-- No sandbox, no file-system jail, no proxy in V1; a driver whose hooks do not fire is not usable, hence the day-one check.
+- No sandbox, no file-system jail, no proxy in V1; a driver whose hooks do not fire is not usable, hence the day-one check, which ruled out `--bare`.
 - `arch hook` is a CLI subcommand for this ([ADR 0023](0023-settings-errors-secrets-packaging-telemetry.md)).
 - Direct `git commit` is denied through the same layer ([ADR 0016](0016-commits.md)).
 - The three seams for V2 plugins (pipeline: stale-write guard → veto → attribution) are kept as spec §8 requires.
