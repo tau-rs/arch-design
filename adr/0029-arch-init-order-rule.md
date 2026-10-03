@@ -1,7 +1,7 @@
 # ADR 0029 · `arch init` order: alphabetical by area name within a side; one area per top-level module, grouping is a hand override
 
 - Date: 2026-10-03
-- Status: proposed (draft: the choice between the candidates is with the product chat, see "The three candidates against real code")
+- Status: accepted
 - Source: tau-rs/arch-design#24 (from:fixtures, found while writing [ADR 0027](0027-arch-init-sides-rule.md)); amends [ADR 0006](0006-arch-init.md) "computed sides and order" and spec §13.6
 
 ## In plain words
@@ -97,6 +97,7 @@ Eight of zero2prod's eleven areas are single files; none is grouped.
 
 - `arch init` (tau-rs/arch) implements decisions 1–6. Spec §13.6 and ADR 0006 keep their text and gain a reference to this ADR; ADR 0027 decision 6 gains a pointer; nothing is renumbered.
 - The `order = 2` of `worker` in ADR 0028 stands, now by rule (`http` < `worker`).
+- Rejected: the order of the `mod` lines as found in the code. rustfmt sorts them, so on a formatted repo it is this rule (both fixtures: identical output); where an author defeats the formatter it needs a merge rule across files (`http` is declared in `adapters/mod.rs`, `worker` in `lib.rs`), lets a formatting change reorder the map, and puts a layout wish into source instead of `areas.toml`.
 - One honest consequence: **the order carries no meaning.** `carrier` sits above `postgres` because of a letter, not because it matters more. The map is predictable on day one, not insightful; the person who wants the business flow down the column (as smallsvc's author did) drags five areas once, and the file keeps it. Rejected: most-called first, which reads as meaningful but is empty through port traits and reshuffles on unrelated edits.
 - A second honest consequence: **the driven column does not line up with the rail.** An adapter to a data store can sit above one to a third-party API while the rail lists third-party first, so their edges cross on the way to the ports. Edges detour and move nothing (MAP-32), so this costs looks, not correctness. Rejected: rail section order on the driven side with the name as tie-break; it is a second rule for one column, depends on guessed facts under degrade, and reproduces nothing in the reference fixture.
 - A third honest consequence: **renaming a module moves it** in a repo whose areas have no `order` in the file, and byte order is not what a person expects in two cases: `v10` sorts before `v2`, and an uppercase letter before every lowercase one. Module names are snake_case by convention, so the second is rare; the first is one edit of the number.
