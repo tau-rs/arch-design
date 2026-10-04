@@ -1,5 +1,7 @@
 # sett · handoff · rebase the roadmap on the retained shell and the V1 spec
 
+> Amended 2026-10-04 from arch-app FINDINGS F-10 (tau-rs/arch-design#40): `sett-findings-view` added (§3 item 4b, lane C).
+
 Oct 2026. For the `tau-rs/sett` chat. Context: since sett's HANDOFF.md and ADR 0001 were written, the arch product chat (a) replaced the shell, (b) re-seated every flow on it, (c) settled the map decisions the PoC left open, and (d) froze a V1 spec. sett's lanes were planned against the old frame. This handoff lists what to keep, what to change, what to add, and the order, so sett ships what arch V1 consumes.
 
 Inputs: `arch-v1-spec.md` (§4 shell, §5 map, §6 flows, §12 open items); the shell artifact https://claude.ai/artifact/KENuEgpvSjX4p7jRTGxebn; the four flows on the shell: plan https://claude.ai/artifact/5yqj554jto8B96bvepuAra · session https://claude.ai/artifact/Eu2VyYvcjsDziTCoB271Dc · review and merge https://claude.ai/artifact/1MxQnkAfsxh61hAQWkvkqU · daily https://claude.ai/artifact/Uq9zaFSn3WDbDZSXJ2XpF6; plugins https://claude.ai/artifact/JGtK8hmBmkakcvRkwqWkmy and https://claude.ai/artifact/CVJt77dw8uCTQgYvkmsNYF. These pages share one CSS and one set of helpers; read them as the reference rendering for the new components (match them, don't copy the CSS; DESIGN.md still wins on look).
@@ -31,6 +33,7 @@ Tokens (DTCG, light/dark, `tokens.rs`), DESIGN.md principles and rules 1–12, t
 2. **`sett-scope-line`**: the left pane's first row: dot, name, sub, lock; tints for main (neutral), you (sel), session (its colour), plan (amber). An indicator, never a control.
 3. **`sett-sessions-view`** (or rows for it): grouped sections, session row (dot, name, state pill, Focus button on the selected row, chevron), group row, sub-agent row, file row with status letter and counts, Changes row, `+ new session · delegate`. Isolated mode (`‹ All sessions · N`).
 4. **`sett-files-view`**: scope line, agent strip (collapsed path, unfolds), projection seg (Directory · Layers), tree rows with presence bar, status letter, writer label when focused.
+4b. **`sett-findings-view`**: the left pane under Findings in the rail (arch-design#40): scope line, a count line (`n · m block`), group rows per rule (rule name, level glyph, count; blocking rules first, folds with a chevron), finding rows under their rule (level glyph, the link `from → to` or the item, `file:line`), only what the scope introduced. A row selects like a panel row: the Map goes to the item with the findings overlay, the inspector shows the fix card. Empty state is `sett-empty`. States: default, blocking, empty, scoped, selected row.
 5. **`sett-panel`** (bottom): tabs Findings · Checks · Terminal · What's new with counts, closed strip of 30 px, tables for Findings (level · finding · rule · witness · origin) and Checks (check · where · result · when · output), terminal block, What's new lines.
 6. **`sett-status-bar`**: counts and states only, each a link; right side Ln/Col and language, map freshness.
 7. **`sett-inspector` layouts**: card + verbs bar + composer; checklist (glyph · fact · source link) with a gated button and a "how" block; result pane with merged · archived pills; plan delta; What's new doors; commit form (message, description, files with pick hunks, checks, then-radio, behind-main line); fix card; Ask thread (ran lines, answer with chips and witness tags, resolve rows for a judgement).
@@ -45,7 +48,7 @@ Tokens (DTCG, light/dark, `tokens.rs`), DESIGN.md principles and rules 1–12, t
 ```
 lane A  DESIGN.md amendments (§2 rows 1–3, 8, 9) · tokens: planning frame, chip kinds, layer tints, surface.unresolved
 lane B  activity-rail · scope-line · status-bar · panel          (the shell can be composed)
-lane C  sessions-view · files-view · changes-list · intent-bar   (left pane and plan)
+lane C  sessions-view · files-view · findings-view · changes-list · intent-bar   (left pane and plan)
 lane D  session-card groups · selector scope states · frame planning · chip kinds · tabbar session tabs
 lane E  inspector layouts (checklist, result, delta, whatsnew, commit, fix, ask) · hunk
 lane F  map amendments: layers direction and tints, node foot, unresolved section, footprint fold
