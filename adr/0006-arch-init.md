@@ -12,7 +12,7 @@ The onboarding funnel is out of V1 (spec §11). A repo without `.arch/` must be 
 
 `arch init` writes:
 - `areas.toml` with computed sides and order (the sides rule: [ADR 0027](0027-arch-init-sides-rule.md); the order rule and what is written per area: [ADR 0029](0029-arch-init-order-rule.md));
-- `rules` from the template: domain must not depend on driving or driven; externals only from driven; the five lints on;
+- `rules` from the template: domain must not depend on driving or driven; externals only from driven; the five lints on (the file format and the lint names: [ADR 0032](0032-rules-allows-format-five-lints.md));
 - the gitignore line for `.arch/cache/`;
 
 in **one commit**, asking **no questions**.
