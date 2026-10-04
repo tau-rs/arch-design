@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0032** (2026-10-04). Later decisions are added as 0033, 0034, …
+Synced-to line for the other repos: **ADR 0033** (2026-10-04). Later decisions are added as 0034, 0035, …
 
 | # | decision |
 |---|---|
@@ -74,6 +74,7 @@ Synced-to line for the other repos: **ADR 0032** (2026-10-04). Later decisions a
 | [0030](adr/0030-analysis-inputs-outside-the-tree.md) | Inputs outside the tree: target triple, toolchain and build-script output are in the package id; the target is this machine's unless `areas.toml` pins it; features are the unit's defaults |
 | [0031](adr/0031-items-and-item-ids.md) | Items and ids: what rust-analyzer calls an item, methods included; variants and fields named in `Link.member`; a method's id sits under its impl's header as written, a non-lib target is marked `[bin:<name>]` |
 | [0032](adr/0032-rules-allows-format-five-lints.md) | `.arch/rules` and `.arch/allows`: TOML, schema version 0 as smallsvc writes it, a level per lint; the five lints are `god-module` · `cycle` · `leaky-port` · `speculative-abstraction` · `unresolved-dyn` |
+| [0033](adr/0033-link-kinds-and-families.md) | Link kinds: 21 in four families, call · type · data · structure, plus `refers-to`, as schema version 0 ships them; `routes` and `queues` are kinds 20 and 21; `calls` · `calls-out` · `hands-off` · `listens-to` · `routes` carry a direction |
 ## Flow pages
 
 | page | what it is |

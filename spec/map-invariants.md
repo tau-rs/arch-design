@@ -24,7 +24,7 @@ The contract the map keeps for every flow, as testable statements, one owner and
 | MAP-14 | Four overlays, sessions · plan · findings · delta, each a toggle; stacking: outline = session, fill = plan or finding; no overlay groups items spatially; an item may carry all four. | as is | fixtures (rows, stacking, no geometry); sett (paint) | `overlay_stacking` (exists); story: one item with all four overlays |
 | MAP-15 | No animation on the map except one pulse on a detected change; `prefers-reduced-motion` removes the pulse. | as is | app / sett | story: a change event pulses once (the 700 ms ring); reduced-motion → no ring |
 | MAP-16 | Unresolved paths (dyn, spawn) are drawn dashed amber and never merged into resolved links; folded to one pill per item; Reach expands them. | as is (with 28: the pill) | fixtures (pill, never merged); sett (dashed amber) | `unresolved_one_pill` (exists); story: the unresolved pill token |
-| MAP-17 | A call-family link against the grain of the unit's column rule is drawn dashed as a smell; no other link kind carries a direction. | amended by [ADR 0025](../adr/0025-direction-call-family-grain.md) | fixtures | `direction_left_to_right`, narrowed per ADR 0025 (exists) |
+| MAP-17 | A directed link (`calls` · `calls-out` · `hands-off` · `listens-to` · `routes`) against the grain of the unit's column rule is drawn dashed as a smell; no other link kind carries a direction. | amended by [ADR 0025](../adr/0025-direction-call-family-grain.md), kinds named by [ADR 0033](../adr/0033-link-kinds-and-families.md) | fixtures | `direction_left_to_right`, narrowed per ADR 0025 (exists) |
 | MAP-18 | Editing tools, toolbar · selection box with pill · tray, are identical everywhere areas are editable. | as is | app | story: the same toolbar on the unit sheet and in a focused area |
 | MAP-19 | Drawing an area is constrained to one column. | as is | app (the gesture); fixtures (an override spanning two sides is rejected, via MAP-2) | story: the drag clamps at the column edge; `columns_are_sides` |
 | MAP-20 | Dropping on a folded chip places into that area. | as is | app | story: drop on a chip, `areas.toml` override names that area |
@@ -50,7 +50,7 @@ The contract the map keeps for every flow, as testable statements, one owner and
 
 ## Checks to add in `arch-fixtures/checks/invariants.rs` (arch-fixtures #5)
 
-`columns_are_sides` · `folded_link_counts` · `reach_depth` · `column_rule_from_entry` · `externals_on_rails` · `rail_docking_moves_nothing` · `ports_from_facts`; and `direction_left_to_right` narrowed to the call family with the grain read from `rule` (ADR 0025). Existing and unchanged: `positions_stable` · `no_state_relayout` · `fold_floor` · `overlay_stacking` · `unresolved_one_pill` · `cross_unit_on_public_surface`; `finding_confidence` (ADR 0009) and `origin_is_core` (spec §3) are not MAP numbers and stay.
+`columns_are_sides` · `folded_link_counts` · `reach_depth` · `column_rule_from_entry` · `externals_on_rails` · `rail_docking_moves_nothing` · `ports_from_facts`; and `direction_left_to_right` narrowed to the five directed kinds with the grain read from `rule` (ADR 0025, ADR 0033). Existing and unchanged: `positions_stable` · `no_state_relayout` · `fold_floor` · `overlay_stacking` · `unresolved_one_pill` · `cross_unit_on_public_surface`; `finding_confidence` (ADR 0009) and `origin_is_core` (spec §3) are not MAP numbers and stay.
 
 ## Story tests to add (arch-app / sett, against `fixtures-for-ui/`)
 
