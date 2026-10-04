@@ -110,7 +110,7 @@ Present in the V1 data model so V2/V3 are additions: a scope id on every item; t
 .arch/
   areas.toml       overrides only: path patterns → area, side, order, main bin (areas derive from modules)
   areas/<name>.md  optional description per area, read into the context pack
-  rules            dependency rules (subject · must not · targets · level) and lint settings
+  rules            dependency rules (subject · must not · targets · level) and lint settings (the lints: ADR 0035)
   allows           allowed sites, keyed by site, person-only
   sessions/<id>/   plan.toml (elements with content-addressed ids, groups, gates), thread.jsonl,
                    records/ (gate outputs, judge verdicts, denials, overrides, resolution records)

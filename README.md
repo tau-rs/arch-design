@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0034** (2026-10-04). Later decisions are added as 0035, 0036, …
+Synced-to line for the other repos: **ADR 0035** (2026-10-04). Later decisions are added as 0036, 0037, …
 
 | # | decision |
 |---|---|
@@ -76,6 +76,7 @@ Synced-to line for the other repos: **ADR 0034** (2026-10-04). Later decisions a
 | [0032](adr/0032-rules-allows-format-five-lints.md) | `.arch/rules` and `.arch/allows`: TOML, schema version 0 as smallsvc writes it, a level per lint; the five lints are `god-module` · `cycle` · `leaky-port` · `speculative-abstraction` · `unresolved-dyn` |
 | [0033](adr/0033-link-kinds-and-families.md) | Link kinds: 21 in four families, call · type · data · structure, plus `refers-to`, as schema version 0 ships them; `routes` and `queues` are kinds 20 and 21; `calls` · `calls-out` · `hands-off` · `listens-to` · `routes` carry a direction |
 | [0034](adr/0034-arch-api-wire-contract.md) | arch-api wire contract: `schemas/arch-api.json` (OpenRPC 1.3, `x-arch-events`) pinned by commit; `arch serve` on a per-repo unix socket, one JSON-RPC message per line; `initialize` returns engine and schema versions; the schema version is semver |
+| [0035](adr/0035-what-the-five-lints-check.md) | What the five lints check: `god-module` an area over 40 % of the unit's lines; `cycle` areas that depend on each other, reported on the cheapest cut; `leaky-port` a port's signature naming adapter technology; `speculative-abstraction` a trait with one implementor (a port: and no test implementor); `unresolved-dyn` a port called with no implementor or several and none wired |
 ## Flow pages
 
 | page | what it is |
