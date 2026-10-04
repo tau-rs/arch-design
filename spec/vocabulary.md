@@ -23,8 +23,8 @@ The terms the spec, the flow pages and the ADRs use, each with the section of `a
 | **finding** | a rule or lint violation on a link or an item, with a witness and an `origin` (always `core` in V1); blocking or not; a finding on a guessed link warns, never blocks | §6 (Daily), §7, §13.9, [ADR 0009](../adr/0009-confidence-levels.md) |
 | **witness** | the source of a shown fact: `file:line`, a contract, a tool output; the host re-reads every locator | §1 (witness rule) |
 | **rule** | a dependency rule in `.arch/rules`: subject · must not · targets · level | §7, §13.6 |
-| **lint** | a lint setting in `.arch/rules`; five lints on by `arch init` | §1, §13.6 |
-| **allow** | an allowed site in `.arch/allows`, keyed by site, person-only | §6 (Daily), §7 |
+| **lint** | a lint setting in `.arch/rules`: `block` · `warn` · `off`; five lints on by `arch init`: `god-module` · `cycle` · `leaky-port` · `speculative-abstraction` · `unresolved-dyn` | §1, §13.6, [ADR 0032](../adr/0032-rules-allows-format-five-lints.md) |
+| **allow** | an allowed site in `.arch/allows`, keyed by site, person-only; names its rule by wording | §6 (Daily), §7, [ADR 0032](../adr/0032-rules-allows-format-five-lints.md) |
 | **plan** | a session that has not run: elements, groups and gates in `plan.toml`; a draft lives in the cache until Accept | §6 (Plan and delegate), §13.20 |
 | **element** | one planned change: an intention and a site; id `sha256(session · intention · site)[:8]`, display label `E3`; owned by `plan.toml`, nothing in source | §6, §13.21, [ADR 0021](../adr/0021-element-identity.md) |
 | **group** | elements grouped by dependency by the fixed core shaper; one gate per group; drawn as lanes on the session card; produced by policies in V2 | §3, §6, §8 |

@@ -38,7 +38,7 @@ arch-design/
 
 ## ADRs
 
-Synced-to line for the other repos: **ADR 0031** (2026-10-03). Later decisions are added as 0032, 0033, …
+Synced-to line for the other repos: **ADR 0032** (2026-10-04). Later decisions are added as 0033, 0034, …
 
 | # | decision |
 |---|---|
@@ -73,6 +73,7 @@ Synced-to line for the other repos: **ADR 0031** (2026-10-03). Later decisions a
 | [0029](adr/0029-arch-init-order-rule.md) | `arch init` order: alphabetical by area name within a side (bytes, ascending); one area per top-level module, a single file included; grouping is a hand override; after `init` the file is the order |
 | [0030](adr/0030-analysis-inputs-outside-the-tree.md) | Inputs outside the tree: target triple, toolchain and build-script output are in the package id; the target is this machine's unless `areas.toml` pins it; features are the unit's defaults |
 | [0031](adr/0031-items-and-item-ids.md) | Items and ids: what rust-analyzer calls an item, methods included; variants and fields named in `Link.member`; a method's id sits under its impl's header as written, a non-lib target is marked `[bin:<name>]` |
+| [0032](adr/0032-rules-allows-format-five-lints.md) | `.arch/rules` and `.arch/allows`: TOML, schema version 0 as smallsvc writes it, a level per lint; the five lints are `god-module` · `cycle` · `leaky-port` · `speculative-abstraction` · `unresolved-dyn` |
 ## Flow pages
 
 | page | what it is |
