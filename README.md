@@ -1,3 +1,15 @@
+# arch-design · moved to tau-rs/arch
+
+On 2026-10-21 this repository was folded into [`tau-rs/arch`](https://github.com/tau-rs/arch) as [`design/`](https://github.com/tau-rs/arch/tree/main/design) (tau-rs/arch#100, merged in tau-rs/arch#101). The full commit history is there (subtree merge, original SHAs kept): the spec, the flow pages, the ADRs and the handoffs.
+
+- Open issues were transferred to `tau-rs/arch`; a `tau-rs/arch-design#NNN` link redirects to its new number.
+- Closed issues and merged pull requests stay readable here.
+- This repository is archived; file new issues in `tau-rs/arch`.
+
+---
+
+The README as it stood at the move:
+
 # arch · design record
 
 **arch** is a desktop tool for Rust codebases, built as an Eclipse Theia product, in which a person and coding agents work on a repository through its architecture map. arch computes the map from rust-analyzer facts, keeps its own notes under `.arch/`, writes nothing into source, and lets you plan a change, delegate it to a session, follow it, review it and merge it, with the manual path always present. The full statement is `spec/arch-v1-spec.md` §1.
